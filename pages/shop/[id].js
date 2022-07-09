@@ -2,13 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Layout } from '../../components';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 const productsDetails = ({ productSingle }) => {
-  const router = useRouter();
-  console.log(router);
-
-  // router.replace(`${productSingle.title}`);
   return (
     <Layout title="product-single">
       {productSingle && (
