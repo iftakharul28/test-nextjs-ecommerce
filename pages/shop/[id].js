@@ -31,7 +31,16 @@ const productsDetails = ({ productSingle }) => {
     </Layout>
   );
 };
-export const getServerSideProps = async ({ params }) => {
+export const getStaticPaths = async () => {
+  const { data } = await axios.get('https://fakestoreapi.com/products');
+  return {
+    paths: data.map((itm) => ({
+      params: { id: itm.id.toString() },
+    })),
+    fallback: false,
+  };
+};
+export const getStaticProps = async ({ params }) => {
   const { data } = await axios.get(
     `https://fakestoreapi.com/products/${params.id}`
   );
