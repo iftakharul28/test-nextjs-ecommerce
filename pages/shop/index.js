@@ -8,11 +8,8 @@ const productsDetails = () => {
   const [productSingle, setProductSingle] = useState('');
   const router = useRouter();
   const key = router.query.product_id;
-  //   console.log(router);
-  //   console.log(key);
   const searchData = async () => {
     const url = `https://fakestoreapi.com/products/${key}`;
-    // console.log(url);
     try {
       const { data } = await axios.get(url);
       if (data) {
@@ -64,17 +61,4 @@ const productsDetails = () => {
     </Layout>
   );
 };
-// export const getStaticProps = async ({ params }) => {
-//   const url = `https://fakestoreapi.com/products/${params}`;
-//   console.log(params);
-//   console.log(url);
-//   const data = 0;
-//   //   const { data } = await axios.get(url);
-//   return {
-//     props: {
-//       productSingle: data,
-//     },
-//     // revalidate: 30,
-//   };
-// };
 export default productsDetails;
