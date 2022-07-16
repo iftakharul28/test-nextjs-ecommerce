@@ -35,7 +35,7 @@ const productsDetails = () => {
   const router = useRouter();
   const key = router.query.product_id;
   const searchData = async () => {
-    const url = `https://fakestoreapi.com/products/${key}`;
+    const url = `${process.env.NEXT_PUBLIC_SINGLE_PAGE}/${key}`;
     try {
       const { data } = await axios.get(url);
       if (data) {
