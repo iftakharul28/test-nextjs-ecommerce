@@ -13,13 +13,12 @@ const Home = () => {
 };
 // api :https://last-airbender-api.herokuapp.com/api/v1/characters/avatar
 export const getStaticProps = async () => {
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}`);
+  const { data } = await axios.get('https://fakestoreapi.com/products');
   return {
     props: {
       products: data,
-      fallback: true,
+      fallback: false,
     },
-    revalidate: 30,
   };
 };
 

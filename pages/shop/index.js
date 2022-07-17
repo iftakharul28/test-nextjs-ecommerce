@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Minus, Plus } from '../../components/Icos';
 import useCart from '../../store/store';
 
-const productsDetails = () => {
+const productsDetails = ({ data }) => {
   const [productSingle, setProductSingle] = useState('');
 
   const totalqty = useCart((state) => state.totalqty);
@@ -34,25 +34,33 @@ const productsDetails = () => {
   };
   const router = useRouter();
   const key = router.query.product_id;
-  const searchData = async () => {
-    const url = `${process.env.NEXT_PUBLIC_SINGLE_PAGE}/${key}`;
-    try {
-      const { data } = await axios.get(url);
-      if (data) {
-        setProductSingle(data);
-      }
-    } catch (error) {
-      console.log(error);
-      if (error.status != 200) {
-        alert('something wents wrong');
-      }
-    }
-  };
+  console.log(key);
+
+  //   const searchData = async () => {
+  //     const url = `${process.env.NEXT_PUBLIC_SINGLE_PAGE}/${key}`;
+  //     try {
+  //       const { data } = await axios.get(url);
+  //       if (data) {
+  //         setProductSingle(data);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //       if (error.status != 200) {
+  //         alert('something wents wrong');
+  //       }
+  //     }
+  //   };
+  //   useEffect(() => {
+  //     if (key) {
+  //       searchData();
+  //     }
+  //   }, [key]);
+
   useEffect(() => {
-    if (key) {
-      searchData();
+    if (data) {
+      setProductSingle(data);
     }
-  }, [key]);
+  }, [data]);
   const addItem = () => {
     addProduct({
       id: productSingle.id,
@@ -109,5 +117,15 @@ const productsDetails = () => {
       )}
     </Layout>
   );
+};
+productsDetails.getInitialProps = async ({ query }) => {
+  const page = query.product_id || 1;
+  const { data } = await axios.get(
+    `${process.env.NEXT_PUBLIC_SINGLE_PAGE}/${page}`
+  );
+  return {
+    data,
+    fallback: true,
+  };
 };
 export default productsDetails;
